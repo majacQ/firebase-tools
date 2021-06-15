@@ -6,15 +6,17 @@ import * as fs from "fs";
 import * as path from "path";
 import * as tmp from "tmp";
 
+import { isEmptyBackend } from "./backend";
+import { discoverBackendSpec } from "./discovery";
 import { FirebaseError } from "../../error";
 import { logger } from "../../logger";
-import { discoverBackendSpec } from "./discovery";
-import { isEmptyBackend } from "./backend";
+import { Options } from "../../options";
 import * as functionsConfig from "../../functionsConfig";
+import * as fenv from "../../functions/env";
+import { check as fenvCheck } from "../../functions/ensureEnv";
 import * as utils from "../../utils";
 import * as fsAsync from "../../fsAsync";
 import * as args from "./args";
-import { Options } from "../../options";
 
 const CONFIG_DEST_FILE = ".runtimeconfig.json";
 
@@ -47,10 +49,17 @@ async function getFunctionsConfig(context: args.Context): Promise<{ [key: string
 }
 
 async function getEnvs(context: args.Context): Promise<{ [key: string]: string }> {
-  const envs = {
+  const defaultEnvs = {
     FIREBASE_CONFIG: JSON.stringify(context.firebaseConfig),
   };
-  return Promise.resolve(envs);
+
+  let projectEnvs: Record<string, string> = {};
+  const enabled = await fenvCheck(context.projectId);
+  if (enabled) {
+    projectEnvs = await fenv.getEnvs(context.projectId);
+  }
+
+  return Promise.resolve({ ...defaultEnvs, ...projectEnvs });
 }
 
 async function pipeAsync(from: archiver.Archiver, to: fs.WriteStream) {
