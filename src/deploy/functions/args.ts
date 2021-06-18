@@ -24,6 +24,7 @@ export interface Context {
   runtimeChoice?: backend.Runtime;
   runtimeConfigEnabled?: boolean;
   firebaseConfig?: FirebaseConfig;
+  managedEnvVars?: boolean;
 
   // Filled in the "deploy" phase.
   uploadUrl?: string;

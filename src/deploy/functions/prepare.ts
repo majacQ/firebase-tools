@@ -3,6 +3,7 @@ import * as clc from "cli-color";
 import { checkRuntimeDependencies } from "./checkRuntimeDependencies";
 import { FirebaseError } from "../../error";
 import { functionMatchesAnyGroup, getFilterGroups } from "./functionsDeployHelper";
+import { check as fenvCheck } from "../../functions/ensureEnv";
 import { getRuntimeChoice } from "./parseRuntimeAndValidateSDK";
 import { prepareFunctionsUpload } from "./prepareFunctionsUpload";
 import { promptForFailurePolicies, promptForMinInstances } from "./prompts";
@@ -54,6 +55,10 @@ export async function prepare(
   // Get the Firebase Config, and set it on each function in the deployment.
   const firebaseConfig = await functionsConfig.getFirebaseConfig(options);
   context.firebaseConfig = firebaseConfig;
+
+  // Check if env vars are managed by CF3.
+  const envStoreEnabled = await fenvCheck(context.projectId);
+  context.managedEnvVars = envStoreEnabled;
 
   // Prepare the functions directory for upload, and set context.triggers.
   logBullet(
