@@ -121,7 +121,7 @@
     "ora": "^3.4.0",
     "portfinder": "^1.0.28",
     "progress": "^2.0.3",
-    "proxy-agent": "^4.0.1",
+    "proxy-agent": "^5.0.0",
     "request": "^2.88.2",
     "rimraf": "^3.0.2",
     "semver": "^5.7.1",
