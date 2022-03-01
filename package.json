@@ -126,7 +126,11 @@
     "rimraf": "^3.0.2",
     "semver": "^5.7.1",
     "superstatic": "^7.1.0",
+  <<<<<<< atomist/npm-audit-snyk-fix-4aec1323b95c3e33163b6447c42dab14
+    "tar": "^4.4.19",
+  =======
     "tar": "^6.1.11",
+  >>>>>>> snyk-fix-4aec1323b95c3e33163b6447c42dab14
     "tcp-port-used": "^1.0.2",
     "tmp": "0.0.33",
     "triple-beam": "^1.3.0",
