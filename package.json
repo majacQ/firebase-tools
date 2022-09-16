@@ -133,7 +133,7 @@
     "tweetsodium": "0.0.5",
     "universal-analytics": "^0.5.3",
     "unzipper": "^0.10.11",
-    "update-notifier": "^5.1.0",
+    "update-notifier": "^6.0.2",
     "uuid": "^3.4.0",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0",
